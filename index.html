@@ -1,0 +1,706 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>Intro to Go | by Aaron Forsander</title>
+
+    <meta name="description" content="impress.js is a presentation tool based on the power of CSS3 transforms and transitions in modern browsers and inspired by the idea behind prezi.com." />
+    <meta name="author" content="Bartek Szopka" />
+
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic" rel="stylesheet" />
+
+    <link href="css/impress-demo.css" rel="stylesheet" />
+    <link href="css/github.css" rel="stylesheet" />
+
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+</head>
+
+<body class="impress-not-supported">
+
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<div id="impress">
+
+    <div id="intro" class="step slide" data-x="-2000" data-y="-1500">
+        <h1>Intro to Go</h1>
+        <h2>Aaron Forsander</h2>
+        <img src="img/frontpage.png">
+    </div>
+
+    <div id="yes" class="step slide" data-x="-1000" data-y="-1500">
+        <h1>Yes</h1>
+        <ul>
+            <li>Created at Google</li>
+            <li>Statically typed</li>
+            <li>Syntactically derived from C</li>
+            <li>Garbage collected</li>
+            <li>Type safe</li>
+            <li>Large standard library</li>
+        </ul>
+    </div>
+
+    <div id="no" class="step slide" data-x="0" data-y="-1500">
+        <h1>No</h1>
+        <ul>
+            <li>Inheritance</li>
+            <li>Operator/method overloading</li>
+            <li>Pointer arithmetic</li>
+            <li>Generics (ouch! biggest complaint)</li>
+        </ul>
+    </div>
+
+    <div id="me" class="step slide" data-x="1000" data-y="-1500">
+        <h1>Why I like it</h1>
+        <ul>
+            <li>Fast</li>
+            <li>Compiles (fast!) to stand-alone binary</li>
+            <li>Lots of batteries included</li>
+            <li>Sugar for people accustomed to dynamic languages</li>
+            <li>Built-in concurrency primitives</li>
+        </ul>
+    </div>
+
+    <div id="doge" class="step slide" data-x="2000" data-y="-1500">
+        <img src="img/go-doge.png">
+    </div>
+
+    <div id="hello" class="step slide" data-x="3000" data-y="-1500">
+        <h1>Hello World</h1>
+        <pre>
+            <code class="go">package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("Hello World")
+}</code>
+        </pre>
+    </div>
+
+    <div id="variables" class="step slide" data-x="4000" data-y="-1500">
+        <h1>Variables</h1>
+        <pre>
+            <code class="go">var foo string = "bar";
+
+var foo = "bar"
+
+foo := "bar"
+
+var (
+    foo = "baz"
+    bar = "boom"
+)</code>
+        </pre>
+    </div>
+
+    <div id="types" class="step slide" data-x="4000" data-y="-500">
+        <h1>Types</h1>
+        <pre>
+            <code class="go">bool string
+
+int  int8  int16  int32  int64
+uint uint8 uint16 uint32 uint64 uintptr
+
+byte // alias for uint8
+
+rune // alias for int32
+     // represents a Unicode code point
+
+float32 float64
+
+complex64 complex128</code>
+        </pre>
+    </div>
+
+    <div id="looping" class="step slide" data-x="5000" data-y="-1500">
+        <h1>Looping</h1>
+        <p>Go has no <code class="inline">while</code> loops.</p>
+        <pre>
+            <code class="go">// Notice that parens aren't needed
+for x := 0; x &lt; 10; x++ {
+    fmt.PrintLn(x);
+}
+
+// C's `while` is spelled `for` in Go.
+sum := 1
+for sum &lt; 1000 {
+    sum += sum
+}</code>
+        </pre>
+    </div>
+
+    <div id="looping-plus" class="step slide" data-x="5000" data-y="-500">
+        <h1>Looping (cont'd)</h1>
+        <pre>
+            <code class="go">// A for with an empty condition repeats
+// ifinitely
+for {
+    fmt.PrintLn("∞")
+}</code>
+        </pre>
+    </div>
+
+    <div id="if" class="step slide" data-x="6000" data-y="-1500">
+        <h1>If</h1>
+        <pre>
+            <code class="go">i := 1
+for {
+    if i % 3 == 0 &amp;&amp; i % 5 == 0 {
+        fmt.Println(i, "fizzbuzz")
+    } else if i % 3 == 0 {
+        fmt.Println(i, "fizz")
+    } else if i % 5 == 0 {
+        fmt.Println(i, "buzz")
+    } else {
+        fmt.Println(i)
+    }
+    i++
+}</code>
+        </pre>
+    </div>
+
+    <div id="if-plus" class="step slide" data-x="6000" data-y="-500">
+        <h1>If (cont'd)</h1>
+        <pre>
+            <code class="go">func pow(x, n, lim float64) float64 {
+    // v is only in scope within the
+    // if statement.
+    if v := math.Pow(x, n); v &lt; lim {
+        return v
+    }
+    return lim
+}</code>
+        </pre>
+    </div>
+
+    <div id="switch" class="step slide" data-x="7000" data-y="-1500">
+        <h1>Switch</h1>
+        <pre>
+            <code class="go">switch {
+case x &lt; 100:
+    fmt.Println("boom!")
+case x == 100:
+    fmt.Println("bam!")
+case x &gt; 100:
+    fmt.Println("pow!")
+    fallthrough
+default:
+    fmt.Println("clang!")
+}</code>
+        </pre>
+    </div>
+
+    <div id="func" class="step slide" data-x="8000" data-y="-1500">
+        <h1>Functions</h1>
+        <pre>
+            <code class="go">func Shout(message string) string {
+  return message + "!"
+}
+
+func Shout2(message string) (shout string) {
+  shout = message + "!"
+  return
+}
+
+func Shout3(message string) (error, string) {
+  return nil, message + "!"
+}</code>
+        </pre>
+    </div>
+
+    <div id="func-plus" class="step slide" data-x="8000" data-y="-500">
+        <h1>Functions (cont'd)</h1>
+        <p>Golang supports function values.</p>
+        <pre>
+            <code class="go">hypot := func(x, y float64) float64 {
+    return math.Sqrt(x*x + y*y)
+}
+
+fmt.Println(hypot(3, 4))</code>
+        </pre>
+    </div>
+
+    <div id="struct" class="step slide" data-x="9000" data-y="-1500">
+        <h1>Structs</h1>
+        <pre>
+            <code class="go">type Point struct {
+    X int
+    Y int
+}
+
+point := Point{0, 0}
+
+fmt.Println(point.X)
+</code>
+        </pre>
+    </div>
+
+    <div id="struct-plus" class="step slide" data-x="9000" data-y="-500">
+        <h1>Structs (cont'd)</h1>
+        <pre>
+            <code class="go">type Point struct {
+    X, Y int
+}
+
+var (
+    p = Point{1, 2}  // has type Point
+    q = &amp;Point{1, 2} // has type *Point
+    r = Point{X: 1}  // Y:0 is implicit
+    s = Point{}      // X:0 and Y:0
+)</code>
+        </pre>
+    </div>
+
+    <div id="arrays" class="step slide" data-x="10000" data-y="-1500">
+        <h1>Arrays</h1>
+        <p>Immutable!</p>
+        <pre>
+            <code class="go">var a [2]string
+a[0] = "Hello"
+a[1] = "World"
+fmt.Println(a[0], a[1])
+fmt.Println(a)</code>
+        </pre>
+        <p>To manipulate arrays, you use <code class="inline">slices</code>.</p>
+    </div>
+
+    <div id="slices" class="step slide" data-x="11000" data-y="-1500">
+        <h1>Slices</h1>
+        <p>Build on arrays to provide great power and convenience.</p>
+        <pre>
+            <code class="go">// Shorthand
+letters := []string{"a", "b", "c", "d"}
+
+// Can also be created with make()
+func make([]T, len, cap) []T
+
+// Example:
+s := make([]byte, 5, 5)
+// s == []byte{0, 0, 0, 0, 0}</code>
+        </pre>
+    </div>
+
+    <div id="slices-plus" class="step slide" data-x="11000" data-y="-500">
+        <h1>Slices (cont'd)</h1>
+        <p>The length and capacity of a slice can be inspected using the built-in len and cap functions.</p>
+        <pre>
+            <code class="go">// If capacity is omitted,
+// defaults to length.
+s := make([]byte, 5)
+
+len(s) == 5
+cap(s) == 5</code>
+        </pre>
+    </div>
+
+    <div id="slices-plus-plus" class="step slide" data-x="11000" data-y="500">
+        <h1>Slices (cont'd)</h1>
+        <p>You can "slice" slices (similar to python).</p>
+        <pre>
+            <code class="go">b := []byte{'g', 'o', 'l', 'a', 'n', 'g'}
+
+// sharing the same storage as b:
+b[1:4] == []byte{'o', 'l', 'a'}
+
+// start and end are optional:
+b[:2] == []byte{'g', 'o'}
+b[2:] == []byte{'l', 'a', 'n', 'g'}
+b[:] == b</code>
+        </pre>
+    </div>
+
+    <div id="slices-plus-plus-plus" class="step slide" data-x="11000" data-y="1500">
+        <h1>Slices (cont'd)</h1>
+        <p>In fact, that's how you create a slice from an array.</p>
+        <pre>
+            <code class="go">x := [3]string{"Лайка", "Белка", "Стрелка"}
+
+// a slice referencing the storage of x
+s := x[:] </code>
+        </pre>
+    </div>
+
+    <div id="slices-plus-plus-plus-plus" class="step slide" data-x="11000" data-y="2500">
+        <h1>Slices (cont'd)</h1>
+        <p>Slices let you copy and append.</p>
+        <pre>
+            <code class="go">a := make([]int, 1)
+// a == []int{0}
+
+a = append(a, 1, 2, 3)
+// a == []int{0, 1, 2, 3}</code>
+        </pre>
+    </div>
+
+    <div id="map" class="step slide" data-x="12000" data-y="-1500">
+        <h1>Maps</h1>
+        <p>Maps keys to values.</p>
+        <pre>
+            <code class="go">m := make(map[string]string)
+
+// Set.
+m["Aaron"] = "Forsander"
+
+// Delete.
+delete(m, "Aaron")
+
+// Check for presence:
+elem, ok = m["Aaron"]</code>
+        </pre>
+    </div>
+
+    <div id="range" class="step slide" data-x="13000" data-y="-1500">
+        <h1>Range</h1>
+        <p>Iterate over slices and maps.</p>
+        <pre>
+            <code class="go">var pow = []int{1, 2, 4, 8, 16, 32, 64, 128}
+
+for i, v := range pow {
+    fmt.Printf("2**%d = %d\n", i, v)
+}</code>
+        </pre>
+    </div>
+
+    <div id="range-plus" class="step slide" data-x="13000" data-y="-500">
+        <h1>Range (cont'd)</h1>
+        <pre>
+            <code class="go">pow := make([]int, 10)
+
+for i := range pow {
+    pow[i] = 1 &lt;&lt; uint(i)
+}
+
+for _, value := range pow {
+    fmt.Printf("%d\n", value)
+}</code>
+        </pre>
+    </div>
+
+    <div id="mi" class="step slide" data-x="14000" data-y="-1500">
+        <h1>Methods and Interfaces</h1>
+        <p>Go does not have classes. LOL WTF</p>
+        <pre>
+            <code class="go">import "time"
+
+type Person struct {
+  Name     string
+  Birthday time.Time
+}
+
+func (person *Person) Age() int {
+  return time.Now().Year() -
+    person.Birthday.Year()
+}</code>
+        </pre>
+    </div>
+
+    <div id="mi-plus" class="step slide" data-x="14000" data-y="-500">
+        <h1>Methods and Interfaces (cont'd)</h1>
+        <pre>
+            <code class="go">func main() {
+  me := Person{
+    Name:     "Aaron Forsander",
+    Birthday: time.Date(1985, time.December,
+        13, 0, 0, 0, 0, time.UTC),
+  }
+
+  fmt.Printf("%s is %d years old\n",
+    me.Name, me.Age())
+
+  // Aaron Forsander is 29 years old
+}</code>
+        </pre>
+    </div>
+
+    <div id="interfaces" class="step slide" data-x="14000" data-y="500">
+        <h1>Interfaces</h1>
+        <ul>
+            <li>if something can do <em>this</em>, then it can be used <em>here</em>.</li>
+            <li>a type can implement multiple interfaces</li>
+        </ul>
+    </div>
+
+    <div id="interfaces-plus" class="step slide" data-x="14000" data-y="1500">
+        <h1>Interfaces (cont'd)</h1>
+        <pre>
+            <code class="go">type Interface interface {
+    // Len is the number of elements
+    // in the collection.
+    Len() int
+
+    // Less reports whether the element with
+    // index i should sort before the element
+    // with index j.
+    Less(i, j int) bool
+
+    // Swap swaps the elements with indexes
+    // i and j.
+    Swap(i, j int)
+}</code>
+        </pre>
+    </div>
+
+    <div id="interfaces-plus-plus" class="step slide" data-x="14000" data-y="2500">
+        <h1>Interfaces (cont'd)</h1>
+        <pre>
+            <code class="go">type Sequence []int
+
+// Methods required by sort.Interface.
+func (s Sequence) Len() int {
+    return len(s)
+}
+func (s Sequence) Less(i, j int) bool {
+    return s[i] &lt; s[j]
+}
+func (s Sequence) Swap(i, j int) {
+    s[i], s[j] = s[j], s[i]
+}</code>
+        </pre>
+    </div>
+
+    <div id="concurrency" class="step slide" data-x="15000" data-y="-1500">
+        <h1>Concurrency</h1>
+        <p>Shared values are passed around on channels and, in fact,
+            never actively shared by separate threads of execution.</p>
+        <blockquote>
+            Do not communicate by sharing memory; instead, share memory by communicating.
+        </blockquote>
+        <p>Said another way, it's a type-safe generalization of Unix pipes.</p>
+    </div>
+
+    <div id="goroutines" class="step slide" data-x="16000" data-y="-1500">
+        <h1>Goroutines</h1>
+        <ul>
+            <li>existing terms—threads, coroutines, processes, and so on—convey inaccurate connotations</li>
+            <li>is a function executing concurrently with other goroutines</li>
+            <li>in the same address space</li>
+            <li>costs little more than the allocation of stack space</li>
+            <li>stacks start small, and grow by allocating heap storage</li>
+        </ul>
+    </div>
+
+    <div id="goroutines-plus" class="step slide" data-x="16000" data-y="-500">
+        <h1>Goroutines</h1>
+        <p>Create a goroutine using the <code class="inline">go</code> keyword.</p>
+        <pre>
+            <code class="go">import "time"
+
+func main() {
+  go func() {
+    time.Sleep(500)
+    fmt.Println("Done sleeping.")
+  }()
+}</code>
+</pre>
+        <p>But this is dumb, we have no way of signaling completion!</p>
+        <p>This is where <code class="inline">channels</code> come into play.</p>
+    </div>
+
+    <div id="channels" class="step slide" data-x="17000" data-y="-1500">
+        <h1>Channels</h1>
+        <pre>
+            <code class="go">// unbuffered integer channel
+ci := make(chan int)
+
+// unbuffered integer channel
+cj := make(chan int, 0)
+
+// buffered channel of pointers to Files
+cs := make(chan *os.File, 100)  </code>
+</pre>
+    </div>
+
+    <div id="channels-plus" class="step slide" data-x="17000" data-y="-500">
+        <h1>Channels (cont'd)</h1>
+        <pre>
+            <code class="go">// Create a channel.
+ch := make(chan int)
+
+// Send a value to a channel.
+ch &lt;- 100
+
+// Receive a value from a channel.
+i := &lt;-ch</code>
+</pre>
+    </div>
+
+    <div id="channels-plus-plus" class="step slide" data-x="17000" data-y="500">
+        <pre>
+            <code class="go">ch := make(chan int)
+
+go func() {
+    time.Sleep(time.Second)
+    fmt.Println("Done sleeping.")
+    ch &lt;- 1
+}()
+
+fmt.Println("Called goroutine.")
+
+// Blocks until value received.
+i := &lt;-ch
+
+fmt.Printf("%d received\n", i)</code>
+</pre>
+    </div>
+
+    <div id="channels-plus-plus-plus" class="step slide" data-x="17000" data-y="1500">
+        <h1>Channels (cont'd)</h1>
+        <ul>
+            <li>Sends to an unbuffered channel block until its value is read</li>
+            <li>Sends to a buffered channel block only when the buffer is full</li>
+        </ul>
+    </div>
+
+    <div id="web" class="step slide" data-x="18000" data-y="-1500">
+        <h1>Web Server</h1>
+        <pre>
+            <code class="go">import (
+    "fmt"
+    "net/http"
+)
+
+func (w http.ResponseWriter, r *http.Request) {
+    fmt.Fprintf(w, "Hi there, I love %s!",
+        r.URL.Path[1:])
+}
+
+func main() {
+    http.HandleFunc("/", handler)
+    http.ListenAndServe(":8080", nil)
+}</code>
+</pre>
+    </div>
+
+    <div id="json" class="step slide" data-x="19000" data-y="-1500">
+        <h1>JSON Serialization</h1>
+        <ul>
+            <li><code class="inline">encoding/json</code> package</li>
+            <li><code class="inline">json.Marshal()</code> a struct into a byte array</li>
+            <li><code class="inline">json.UnMarshal()</code> a byte array into a struct</li>
+        </ul>
+    </div>
+
+    <div id="json-plus" class="step slide" data-x="19000" data-y="-500">
+        <h1>JSON (cont'd)</h1>
+        <pre>
+            <code class="go">import "encoding/json"
+
+type Message struct {
+  Name string
+  Body string
+}
+
+func main() {
+  // Create a new message.
+  message := Message{"Alice", "Hello"}
+
+  // Encode message.
+  bytes, err := json.Marshal(message)
+}
+</code></pre>
+    </div>
+
+    <div id="json-plus-plus" class="step slide" data-x="19000" data-y="500">
+        <h1>JSON (cont'd)</h1>
+        <pre>
+            <code class="go">// JSON as a byte array
+j := []byte(`{"Name":"Aaron","Body":"Hi!"}`
+
+// Decode into a struct
+var message Message
+err = json.Unmarshal(j, &amp;message)
+
+fmt.Printf("%s said: $s\n",
+    message.Name, message.Body)</code></pre>
+    </div>
+
+    <div id="testing" class="step slide" data-x="20000" data-y="-1500">
+        <h1>Testing</h1>
+        <ul>
+            <li>Run: <code class="inline">go test</code></li>
+            <li>Assumes all <code class="inline">*_test.go</code> files are test files</li>
+            <li>package <pre class="inline"><code class="go">import "testing"</code></pre></li>
+            <li>Assumes functions of the form <pre class="inline"><code class="go">func TestXxx(*testing.T)</code></pre> are tests</li>
+            <li>No assertions. If a test fails the rest should still run.</li>
+        </ul>
+    </div>
+
+    <div id="testing-plus" class="step slide" data-x="20000" data-y="-500">
+        <h1>Testing (cont'd)</h1>
+        <pre>
+            <code class="go">package newmath
+
+import "testing"
+
+func TestSqrt(t *testing.T) {
+    const in, out = 4, 2
+
+    if x := Sqrt(in); x != out {
+        t.Errorf("Sqrt(%v) = %v, want %v",
+            in, x, out)
+    }
+}</code></pre>
+    </div>
+
+    <div id="tools" class="step slide" data-x="21000" data-y="-1500">
+        <h1>Tools</h1>
+        <ul>
+            <li>
+                <code class="inline">go fmt</code>: Formats your program!
+                <ul>
+                    <li>Only 1 way to format go code (♥♥♥♥♥♥)</li>
+                    <li>Integrates easily with text editors</li>
+                </ul>
+            </li>
+            <li>
+                <code class="inline">go get</code>: Download and install packages
+                <ul>
+                    <li>Example: <code class="inline">go get github.com/rakyll/boom</code></li>
+                    <li>Also fetches dependencies</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div id="users" class="step slide" data-x="22000" data-y="-1500">
+        <h1>Who is using it?</h1>
+        <ul>
+            <li>Google's download server, <code class="inline">dl.google.com</code></li>
+            <li>Docker, <a href="http://www.docker.io/">http://www.docker.io/</a></li>
+            <li>Heroku, <a href="https://www.heroku.com/">https://www.heroku.com/</a></li>
+            <li>Airbrake, <a href="https://airbrake.io/">https://airbrake.io/</a></li>
+            <li>Umbel, <a href="https://www.umbel.com/">https://www.umbel.com/</a></li>
+        </ul>
+    </div>
+
+    <div id="users-plus" class="step slide" data-x="22000" data-y="-500">
+        <h1>Who is using it?</h1>
+        <blockquote>
+Python and Ruby programmers come to Go because they don't have to surrender much expressiveness, but gain performance and get to play with concurrency. C++ programmers don't come to Go because they have fought hard to gain exquisite control of their programming domain, and don't want to surrender any of it. To them, software isn't just about getting the job done, it's about doing it a certain way.
+        </blockquote>
+        <p>--Rob Pike</p>
+    </div>
+
+    <div id="benchmarks" class="step slide" data-x="23000" data-y="-1500">
+        <h1>Benchmarks</h1>
+        <a href="http://www.techempower.com/benchmarks/">http://www.techempower.com/benchmarks/</a>
+        <img src="img/1657.png">
+    </div>
+
+</div>
+
+<script src="js/highlight.pack.js"></script>
+<script src="js/impress.js"></script>
+<script>
+    impress().init();
+    hljs.initHighlightingOnLoad();
+</script>
+
+</body>
+</html>
